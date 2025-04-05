@@ -1,0 +1,5 @@
+
+
+Make and apply migrations:
+    alembic revision --autogenerate -m "Add workspaces and roles"
+    alembic upgrade head

@@ -1,6 +1,16 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from app.database import Base
+import enum
+
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship
+
+from app.database import Base
+
+
+class RoleEnum(str, enum.Enum):
+    admin = "admin"
+    editor = "editor"
+    viewer = "viewer"
+
 
 class User(Base):
     __tablename__ = "users"
@@ -9,7 +19,6 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    role = Column(String, default="viewer")  # Roles: admin, editor, viewer
 
 
 class Workspace(Base):
@@ -20,5 +29,22 @@ class Workspace(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User")
 
-User.workspaces = relationship("Workspace", back_populates="owner", cascade="all, delete")
 
+class WorkspaceMember(Base):
+    __tablename__ = "workspace_members"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    workspace_id = Column(Integer, ForeignKey("workspaces.id"), nullable=False)
+    role = Column(Enum(RoleEnum), default=RoleEnum.viewer)
+
+    user = relationship("User")
+    workspace = relationship("Workspace")
+
+
+User.workspaces = relationship(
+    "Workspace", back_populates="owner", cascade="all, delete"
+)
+Workspace.members = relationship(
+    "WorkspaceMember", back_populates="workspace", cascade="all, delete"
+)
