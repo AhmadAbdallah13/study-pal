@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.auth import get_current_user
-from app.models import WorkspaceMember, RoleEnum
+from app.models.auth import WorkspaceMember, RoleEnum
 
 def get_workspace_role(workspace_id: int, user_id: int, db: Session):
     member = db.query(WorkspaceMember).filter_by(user_id=user_id, workspace_id=workspace_id).first()

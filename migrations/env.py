@@ -5,8 +5,18 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.database import DATABASE_URL
-from app.models import Base
+from app.database import DATABASE_URL, Base
+from app.models.auth import (
+    User,
+    Workspace,
+    WorkspaceMember,
+)
+
+project_tables = [
+    User,
+    Workspace,
+    WorkspaceMember,
+]
 
 
 # this is the Alembic Config object, which provides

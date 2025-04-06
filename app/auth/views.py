@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.auth.helpers import hash_password, verify_password
 from app.database import SessionLocal
-from app.models import User
+from app.models.auth import User
 from app.auth.request_models import UserLoginRequest, UserRegisterRequest
 
 SECRET_KEY = os.getenv("SECRET_KEY")

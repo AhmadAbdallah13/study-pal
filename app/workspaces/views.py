@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.models import RoleEnum, Workspace, User, WorkspaceMember
+from app.models.auth import RoleEnum, Workspace, User, WorkspaceMember
 from app.auth.views import get_current_user
 from app.workspaces.request_models import CreateWorkspaceRequest
 

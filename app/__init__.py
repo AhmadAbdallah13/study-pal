@@ -1,3 +1,3 @@
-from .models import User, Workspace
+from .models.auth import User, Workspace
 
 models = [User, Workspace]
