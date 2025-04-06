@@ -7,23 +7,15 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from app.auth.helpers import hash_password, verify_password
-from app.database import SessionLocal
+from app.db import get_db
 from app.models.auth import User
-from app.auth.request_models import UserLoginRequest, UserRegisterRequest
+from app.auth.requests_schemas import UserLoginRequest, UserRegisterRequest
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 router = APIRouter()

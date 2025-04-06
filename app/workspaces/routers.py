@@ -1,20 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
-from app.models.auth import RoleEnum, Workspace, User, WorkspaceMember
-from app.auth.views import get_current_user
-from app.workspaces.request_models import CreateWorkspaceRequest
+
+from app.auth.routers import get_current_user
+from app.db import get_db
+from app.models.auth import RoleEnum, User, Workspace, WorkspaceMember
+from app.workspaces.requests_schemas import CreateWorkspaceRequest
 
 router = APIRouter()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @router.post("/create")
 def create_workspace(
