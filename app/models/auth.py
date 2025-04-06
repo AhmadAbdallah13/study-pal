@@ -19,6 +19,8 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
+    flashcards = relationship("Flashcard", back_populates="created_by", cascade="all, delete")
+    quizzes = relationship("Quiz", back_populates="created_by", cascade="all, delete")
 
 
 class Workspace(Base):
@@ -28,6 +30,8 @@ class Workspace(Base):
     name = Column(String, unique=True, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User")
+    flashcards = relationship("Flashcard", back_populates="workspace", cascade="all, delete")
+    quizzes = relationship("Quiz", back_populates="workspace", cascade="all, delete")
 
 
 class WorkspaceMember(Base):

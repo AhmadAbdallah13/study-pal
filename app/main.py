@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from app.routers import users
-from app.auth.views import router as auth_router
-from app.workspaces import views
+from app.auth import routers as auth_routers
+from app.workspaces import routers as workspace_routers
+from app.flashcards import routers as flashcards_routers
 
 app = FastAPI()
 
-app.include_router(auth_router, prefix="/auth")
-app.include_router(users.router, prefix="/users")
-app.include_router(views.router, prefix="/workspaces")
+app.include_router(auth_routers.router, prefix="/auth")
+app.include_router(workspace_routers.router, prefix="/workspaces")
+app.include_router(flashcards_routers.router, prefix="/flashcards")

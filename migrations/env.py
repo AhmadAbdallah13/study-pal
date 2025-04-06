@@ -1,21 +1,23 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
-
 from app.database import DATABASE_URL, Base
 from app.models.auth import (
     User,
     Workspace,
     WorkspaceMember,
 )
+from app.models.flashcards import Flashcard, Quiz, QuizQuestion
 
 project_tables = [
     User,
     Workspace,
     WorkspaceMember,
+    Flashcard,
+    Quiz,
+    QuizQuestion,
 ]
 
 
@@ -71,9 +73,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
