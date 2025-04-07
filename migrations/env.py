@@ -9,7 +9,8 @@ from app.models.auth import (
     Workspace,
     WorkspaceMember,
 )
-from app.models.flashcards import Flashcard, Quiz, QuizQuestion
+from app.models.flashcards import Flashcard
+from app.models.quizzes import Quiz, QuizQuestion
 
 project_tables = [
     User,

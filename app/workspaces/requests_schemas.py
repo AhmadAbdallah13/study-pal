@@ -8,3 +8,10 @@ class CreateWorkspaceRequest(BaseModel):
 class GetWorkspaceRequest(BaseModel):
     username: str
     password: str
+
+
+class WorkspaceOut(CreateWorkspaceRequest):
+    id: int
+
+    class Config:
+        orm_mode = True

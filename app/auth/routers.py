@@ -7,9 +7,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from app.auth.helpers import hash_password, verify_password
-from app.db import get_db
-from app.models.auth import User
 from app.auth.requests_schemas import UserLoginRequest, UserRegisterRequest
+from app.database import get_db
+from app.models.auth import User
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
@@ -61,6 +61,12 @@ def get_current_user(
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
+    except jwt.exceptions.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token has expired!",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     except HTTPException:
         raise credentials_exception
 
