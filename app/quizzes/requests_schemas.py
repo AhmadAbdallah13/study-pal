@@ -37,3 +37,11 @@ class QuizOut(QuizCreate):
 
     class Config:
         orm_mode = True
+
+
+class QuizUpdate(BaseModel):
+    title: Optional[str]
+    description: Optional[str]
+
+    class Config:
+        orm_mode = True
