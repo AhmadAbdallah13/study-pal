@@ -34,11 +34,13 @@ def create_flashcard(
 
 
 @router.get("/workspace/{workspace_id}", response_model=list[FlashcardOut])
-def get_workspace_flashcards(workspace_id: int, db: Session = Depends(get_db)):
+def get_workspace_flashcards(
+    workspace_id: int, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
+):
     """
     Get all flashcards for a specific workspace.
     """
-    return crud.get_flashcards_by_workspace(db, workspace_id)
+    return crud.get_flashcards_by_workspace(db, workspace_id, skip, limit)
 
 
 @router.get("/get/{card_id}", response_model=FlashcardOut)
